@@ -20,8 +20,8 @@ def rodar(x_treinamento, y_treinamento, x_teste, y_teste):
     acuracia = accuracy_score(y_modelo, y_teste)
     
     resultado = {}
-    resultado['tempo_treino'] = int(tempo_treino * 1000)
-    resultado['tempo_teste'] = int(tempo_teste * 1000)
+    resultado['tempo_treino'] = tempo_treino * 1000
+    resultado['tempo_teste'] = tempo_teste * 1000
     resultado['acuracia'] = acuracia
     
     # print(y_teste == y_modelo)

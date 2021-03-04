@@ -1,4 +1,5 @@
 import knn_semPeso
+import knn_comPeso
 from dados import get_dados, nomes as nome_dados
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
@@ -11,7 +12,7 @@ Ks = [1, 2, 3, 5, 7, 11, 13, 15]
 relatorios = {} #--
 
 nome_algoritmos = ["knn_sem_peso", "knn_com_peso", "knn_adaptativo"]
-treinadores = [knn_semPeso,knn_semPeso, knn_semPeso]
+treinadores = [knn_semPeso, knn_comPeso, knn_semPeso]
 
 def treinar(indice_dados, treinador, nome_algoritmo):
     x,y = get_dados(indice_dados)
@@ -81,7 +82,7 @@ def plotar_graficos(indice_dados):
     df_tempos_teste.plot()
     plt.title("Tempo de teste dos algoritmos em relação aos Ks")
     plt.xlabel("Valor do K")
-    plt.ylabel("Tempo de teste (em ms")
+    plt.ylabel("Tempo de teste (em ms)")
     # plt.savefig(folder_name + 'tempos_teste.png', format='png')
     plt.show()
 
@@ -90,11 +91,3 @@ def plotar_graficos(indice_dados):
 if __name__ == '__main__':
     plotar_graficos(0)
     plotar_graficos(1)
-    # treinar(0, knn_semPeso,nome_algoritmos[0])
-    # print(relatorios['knn_sem_peso'])
-    # print(relatorios['knn_sem_peso'][7])
-    # treinar(1, knn_semPeso,"knn_sem_peso")
-
-    # relatorios
-
-    
