@@ -8,8 +8,9 @@ atributos = [21, 21]
 def get_dados(indice):
     data = arff.loadarff('dados/' + nomes[indice]+'.arff')
     df = pd.DataFrame(data[0])
-    df['defects'] = df['defects'].astype(str)
-    return df
+    x = df.iloc[:, :-1].values
+    y = df.iloc[:, atributos[indice]].values
+    return [x,y]
 
 
 if __name__ == '__main__':
@@ -18,8 +19,7 @@ if __name__ == '__main__':
 
     # data_pc1 = arff.loadarff('dados/pc1.arff')
     # df_pc1 = pd.DataFrame(data_pc1[0])
-    conjuntoDados = get_dados(0)
-    x = conjuntoDados.iloc[:, :-1].values
-    y = conjuntoDados.iloc[:, atributos[0]].values
-    print(x)
-    print(y)
+    [a,b] = get_dados(1)
+    
+    print(a)
+    print(b)
