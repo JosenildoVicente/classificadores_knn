@@ -1,18 +1,50 @@
 import knn_semPeso
 import knn_comPeso
 from dados import get_dados, nomes as nome_dados
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-dark-palette')
 import os
 import pandas as pd
+import math
 
 Ks = [1, 2, 3, 5, 7, 11, 13, 15]
+
+k_fold = 10
 
 relatorios = {} #--
 
 nome_algoritmos = ["knn_sem_peso", "knn_com_peso", "knn_adaptativo"]
 treinadores = [knn_semPeso, knn_comPeso, knn_semPeso]
+
+def cross_validation(x,y, indice):
+    div = math.ceil(len(x)/k_fold)
+    div_atual = div * indice
+    div_prox = div * (indice+1)
+    
+    x_teste = list(x[div_atual:div_prox])
+    x_treino = list(x[0:div_atual]) + list(x[div_prox:len(x)])
+
+    y_teste = list(y[div_atual:div_prox])
+    y_treino = list(y[0:div_atual]) + list(y[div_prox:len(x)])
+
+    return x_treino, x_teste, y_treino, y_teste
+
+def media_relatorio(relatorio):
+    soma_tempo_treino = []
+    soma_tempo_teste = []
+    soma_acuracia = []
+    res = {}
+
+    for i in range(k_fold):
+        soma_tempo_treino.append(relatorio[i]['tempo_treino'])
+        soma_tempo_teste.append(relatorio[i]['tempo_teste'])
+        soma_acuracia.append(relatorio[i]['acuracia'])
+    
+    res['tempo_treino'] = sum(soma_tempo_treino)/k_fold
+    res['tempo_teste'] = sum(soma_tempo_teste)/k_fold
+    res['acuracia'] = sum(soma_acuracia)/k_fold
+
+    return res
 
 def treinar(indice_dados, treinador, nome_algoritmo):
     x,y = get_dados(indice_dados)
@@ -22,12 +54,13 @@ def treinar(indice_dados, treinador, nome_algoritmo):
         treinador.K = k
         relatorios[nome_algoritmo][k] = {}
 
-        x_treino, x_teste, y_treino, y_teste = train_test_split(x, y)
+        relatorio = []
+        for i in range(0,k_fold):
+            x_treino, x_teste, y_treino, y_teste = cross_validation(x,y,i)
+            relatorio.append( treinador.rodar(x_treino, y_treino, x_teste, y_teste) )
+                
+        relatorios[nome_algoritmo][k] = media_relatorio(relatorio)
         
-        relatorio = treinador.rodar(x_treino, y_treino, x_teste, y_teste)
-       
-        relatorios[nome_algoritmo][k] = relatorio
-
 def plotar_graficos(indice_dados):
     acuracias = []
     tempos_treino = []
@@ -89,5 +122,8 @@ def plotar_graficos(indice_dados):
 
 
 if __name__ == '__main__':
-    plotar_graficos(0)
+    # plotar_graficos(0)
     plotar_graficos(1)
+    # cross_validation(range(50),0,6)
+    # treinar(0,treinadores[0], nome_algoritmos[0])
+    # print(relatorios[nome_algoritmos[0]][1])
