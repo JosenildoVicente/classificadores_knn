@@ -1,5 +1,6 @@
 import knn_semPeso
 import knn_comPeso
+import knn_adaptativo
 from dados import get_dados, nomes as nome_dados
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-dark-palette')
@@ -14,7 +15,7 @@ k_fold = 10
 relatorios = {} #--
 
 nome_algoritmos = ["knn_sem_peso", "knn_com_peso", "knn_adaptativo"]
-treinadores = [knn_semPeso, knn_comPeso, knn_semPeso]
+treinadores = [knn_semPeso, knn_comPeso, knn_adaptativo]
 
 def cross_validation(x,y, indice):
     div = math.ceil(len(x)/k_fold)
@@ -127,3 +128,9 @@ if __name__ == '__main__':
     # cross_validation(range(50),0,6)
     # treinar(0,treinadores[0], nome_algoritmos[0])
     # print(relatorios[nome_algoritmos[0]][1])
+    # x,y = get_dados(0)
+    # x_treino, x_teste, y_treino, y_teste = cross_validation(x,y,2)
+    # print(len(x))
+    # print(len(x_treino))
+    # print(len(x_teste))
+    # print(treinadores[2].rodar(x_treino, y_treino, x_teste, y_teste))
