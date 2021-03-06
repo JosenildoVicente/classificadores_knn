@@ -150,6 +150,7 @@ def plotar_graficos(indice_dados):
     plt.ylabel("Tempo de teste (em ms)")
     plt.savefig(folder_name + 'tempos_teste_sem_adaptativo.png', format='png')
     plt.show()
+    plt.close()
 
 
 
