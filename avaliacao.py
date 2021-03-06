@@ -18,7 +18,7 @@ k_fold = 10
 relatorios = {} #
 
 nome_algoritmos = ["knn_sem_peso", "knn_com_peso", "knn_adaptativo"]
-treinadores = [knn_semPeso, knn_comPeso, knn_comPeso]
+treinadores = [knn_semPeso, knn_comPeso, knn_adaptativo]
 
 # Método para separação dos dados de acordo com o k_fold cross validation
 def cross_validation(x,y, indice):
